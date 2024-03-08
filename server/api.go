@@ -16,5 +16,5 @@ func NewServer() *Server {
 }
 
 func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.GetFokusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "Not ready")
+	return nil, status.Errorf(codes.Unimplemented, "Need to get to this")
 }
