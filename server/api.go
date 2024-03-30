@@ -9,6 +9,12 @@ import (
 	pb "github.com/brotherlogic/fokus/proto"
 )
 
+type Fokusable interface {
+	getFokus(ctx context.Context) (*pb.Focus, error)
+	getName() string
+	getType() pb.Focus_FocusType
+}
+
 type Server struct{}
 
 func NewServer() *Server {
