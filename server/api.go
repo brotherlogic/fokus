@@ -3,10 +3,9 @@ package server
 import (
 	"context"
 
+	pb "github.com/brotherlogic/fokus/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-
-	pb "github.com/brotherlogic/fokus/proto"
 )
 
 type Fokusable interface {
@@ -15,12 +14,23 @@ type Fokusable interface {
 	getType() pb.Focus_FocusType
 }
 
-type Server struct{}
+type Server struct {
+	modules []Fokusable
+}
 
 func NewServer() *Server {
-	return &Server{}
+	return &Server{
+		modules: []Fokusable{&Overdue{}},
+	}
 }
 
 func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.GetFokusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "Need to get to this")
+	for _, m := range s.modules {
+		focus, err := m.getFokus(ctx)
+		if err == nil && focus != nil {
+			return &pb.GetFokusResponse{Focus: focus}, nil
+		}
+	}
+
+	return nil, status.Errorf(codes.NotFound, "Could not find focus task")
 }
