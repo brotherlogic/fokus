@@ -2,10 +2,14 @@ package server
 
 import (
 	"context"
+	"log"
 
-	pb "github.com/brotherlogic/fokus/proto"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	ghbclient "github.com/brotherlogic/githubridge/client"
+
+	pb "github.com/brotherlogic/fokus/proto"
 )
 
 type Fokusable interface {
@@ -19,8 +23,12 @@ type Server struct {
 }
 
 func NewServer() *Server {
+	client, err := ghbclient.GetClientInternal()
+	if err != nil {
+		log.Fatalf("Unable to reach GHB")
+	}
 	return &Server{
-		modules: []Fokusable{&Overdue{}},
+		modules: []Fokusable{&Overdue{client: client}},
 	}
 }
 
