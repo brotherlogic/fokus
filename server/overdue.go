@@ -29,7 +29,7 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 		return nil, err
 	}
 
-	sort.SliceStable(issues.Issues, func(i, j int) bool { return issues.Issues[i].GetId() < issues.Issues[j].GetId() })
+	sort.SliceStable(issues.Issues, func(i, j int) bool { return issues.Issues[i].GetOpenedDate() < issues.Issues[j].GetOpenedDate() })
 
 	return &pb.Focus{
 		Type:   o.getType(),
