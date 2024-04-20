@@ -39,7 +39,7 @@ func main() {
 
 	log.Printf("Serving on port :%d", *port)
 	if err := gs.Serve(lis); err != nil {
-		log.Fatalf("fokus is unable to serve grpc: %v", err)
+		log.Fatalf("fokus is unable to serve grpc for some reason: %v", err)
 	}
 	log.Fatalf("fokus has closed the grpc port for some reason")
 }
