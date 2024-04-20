@@ -19,7 +19,7 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: |
-            brotherlogic/gramophile
+            brotherlogic/fokus
           flavor: |
             latest=false
           tags: |
