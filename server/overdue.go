@@ -7,7 +7,7 @@ import (
 	pb "github.com/brotherlogic/fokus/proto"
 	githubridgeclient "github.com/brotherlogic/githubridge/client"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/internal/status"
+	"google.golang.org/grpc/status"
 
 	"context"
 
