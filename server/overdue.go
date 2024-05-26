@@ -33,6 +33,6 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 
 	return &pb.Focus{
 		Type:   o.getType(),
-		Detail: issues.Issues[0].GetTitle(),
+		Detail: fmt.Sprintf("%v [%v]", issues.Issues[0].GetTitle(), issues.Issues[0].Id)
 	}, nil
 }
