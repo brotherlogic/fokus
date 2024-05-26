@@ -38,7 +38,7 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			return &pb.Focus{
 				Type:   o.getType(),
-				Detail: fmt.Sprintf("%v [%v]", issue.GetTitle(), issue.GetId()),
+				Detail: fmt.Sprintf("%v [%v] -> %v", issue.GetTitle(), issue.GetId(), issue.GetState()),
 			}, nil
 		}
 	}
