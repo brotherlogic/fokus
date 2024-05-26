@@ -6,6 +6,8 @@ import (
 
 	pb "github.com/brotherlogic/fokus/proto"
 	githubridgeclient "github.com/brotherlogic/githubridge/client"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/internal/status"
 
 	"context"
 
@@ -32,8 +34,13 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 
 	sort.SliceStable(issues.Issues, func(i, j int) bool { return issues.Issues[i].GetOpenedDate() < issues.Issues[j].GetOpenedDate() })
 
-	return &pb.Focus{
-		Type:   o.getType(),
-		Detail: fmt.Sprintf("%v [%v]", issues.Issues[0].GetTitle(), issues.Issues[0].Id),
-	}, nil
+	for _, issue := range issues.Issues {
+		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
+			return &pb.Focus{
+				Type:   o.getType(),
+				Detail: fmt.Sprintf("%v [%v]", issue.GetTitle(), issue.GetId()),
+			}, nil
+		}
+	}
+	return nil, status.Errorf(codes.InvalidArgument, "Unable to locate an open issue")
 }

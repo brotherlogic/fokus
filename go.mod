@@ -5,10 +5,10 @@ go 1.21
 toolchain go1.22.1
 
 require (
-	github.com/brotherlogic/githubridge v0.2789.0
-	github.com/prometheus/client_golang v1.19.0
-	google.golang.org/grpc v1.63.2
-	google.golang.org/protobuf v1.33.0
+	github.com/brotherlogic/githubridge v0.2797.0
+	github.com/prometheus/client_golang v1.19.1
+	google.golang.org/grpc v1.64.0
+	google.golang.org/protobuf v1.34.1
 )
 
 require (
@@ -21,12 +21,12 @@ require (
 	github.com/google/go-querystring v1.1.0 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.53.0 // indirect
-	github.com/prometheus/procfs v0.14.0 // indirect
-	golang.org/x/crypto v0.22.0 // indirect
-	golang.org/x/net v0.24.0 // indirect
+	github.com/prometheus/procfs v0.15.0 // indirect
+	golang.org/x/crypto v0.23.0 // indirect
+	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/oauth2 v0.18.0 // indirect
-	golang.org/x/sys v0.19.0 // indirect
-	golang.org/x/text v0.14.0 // indirect
+	golang.org/x/sys v0.20.0 // indirect
+	golang.org/x/text v0.15.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240415180920-8c6c420018be // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240521202816-d264139d666e // indirect
 )
