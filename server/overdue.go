@@ -41,7 +41,7 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
 					return &pb.Focus{
 						Type:   o.getType(),
-						Detail: fmt.Sprintf("%v [%v] -> %v", issue.GetTitle(), issue.GetId(), issue.GetState()),
+						Detail: fmt.Sprintf("%v [%v] -> %v (%v)", issue.GetTitle(), issue.GetId(), issue.GetState(), issue.GetRepo()),
 					}, nil
 				}
 			}
