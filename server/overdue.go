@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"sort"
+	"strings"
 
 	pb "github.com/brotherlogic/fokus/proto"
 	githubridgeclient "github.com/brotherlogic/githubridge/client"
@@ -37,10 +38,12 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() != "bandcampserver" {
-				return &pb.Focus{
-					Type:   o.getType(),
-					Detail: fmt.Sprintf("%v [%v] -> %v", issue.GetTitle(), issue.GetId(), issue.GetState()),
-				}, nil
+				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
+					return &pb.Focus{
+						Type:   o.getType(),
+						Detail: fmt.Sprintf("%v [%v] -> %v", issue.GetTitle(), issue.GetId(), issue.GetState()),
+					}, nil
+				}
 			}
 		}
 	}
