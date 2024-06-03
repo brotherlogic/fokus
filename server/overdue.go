@@ -37,7 +37,7 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
-			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" {
+			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
 					return &pb.Focus{
 						Type:   o.getType(),
