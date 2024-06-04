@@ -48,7 +48,7 @@ func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
 			if issue.GetRepo() == "home" {
 				return &pb.Focus{
 					Type:   h.getType(),
-					Detail: fmt.Sprintf("%v [%v] -> %v", issue.GetTitle(), issue.GetId(), issue.GetState()),
+					Detail: fmt.Sprintf("%v [%v] -> %v (weekend)", issue.GetTitle(), issue.GetId(), issue.GetState()),
 				}, nil
 			}
 		}
