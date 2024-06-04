@@ -49,7 +49,7 @@ func (h *HomeWeek) getFokus(ctx context.Context) (*pb.Focus, error) {
 				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().YearDay() {
 					return &pb.Focus{
 						Type:   h.getType(),
-						Detail: fmt.Sprintf("%v [%v] -> %v", issue.GetTitle(), issue.GetId(), issue.GetState()),
+						Detail: fmt.Sprintf("%v [%v] -> %v (home)", issue.GetTitle(), issue.GetId(), issue.GetState()),
 					}, nil
 				}
 			}
