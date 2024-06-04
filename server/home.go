@@ -24,14 +24,16 @@ func (h *Home) getName() string {
 }
 
 func (h *Home) getType() pb.Focus_FocusType {
-	return pb.Focus_FOCUS_ON_CODING_TASKS
+	return pb.Focus_FOCUS_ON_HOME_TASKS
 }
 
 func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
 	if time.Now().Weekday() != time.Saturday && time.Now().Weekday() != time.Sunday {
-		if time.Now().Hour() < 13 && time.Now().Hour() >= 16 {
-			return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
-		}
+		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
+	}
+
+	if time.Now().Hour() < 13 && time.Now().Hour() >= 16 {
+		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
 	issues, err := h.client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
