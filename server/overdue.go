@@ -40,7 +40,11 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
-					if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().YearDay() {
+					location, err := time.LoadLocation("America/Los_Angeles")
+					if err != nil {
+						return nil, err
+					}
+					if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().In(location).YearDay() {
 						return &pb.Focus{
 							Type:   o.getType(),
 							Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), time.Now()),
