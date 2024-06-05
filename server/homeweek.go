@@ -32,7 +32,7 @@ func (h *HomeWeek) getFokus(ctx context.Context) (*pb.Focus, error) {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
-	if time.Now().Hour() < 20 && time.Now().Hour() >= 21 {
+	if time.Now().Hour() < 20 || time.Now().Hour() >= 21 {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
