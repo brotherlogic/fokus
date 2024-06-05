@@ -47,7 +47,7 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 					if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().In(location).YearDay() {
 						return &pb.Focus{
 							Type:   o.getType(),
-							Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), time.Now()),
+							Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), time.Now().In(location)),
 						}, nil
 					}
 				}
