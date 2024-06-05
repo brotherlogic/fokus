@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"time"
 
 	pb "github.com/brotherlogic/fokus/proto"
 	githubridgeclient "github.com/brotherlogic/githubridge/client"
@@ -39,10 +40,12 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
-					return &pb.Focus{
-						Type:   o.getType(),
-						Detail: fmt.Sprintf("%v [%v] -> %v (%v)", issue.GetTitle(), issue.GetId(), issue.GetState(), issue.GetRepo()),
-					}, nil
+					if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().YearDay() {
+						return &pb.Focus{
+							Type:   o.getType(),
+							Detail: fmt.Sprintf("%v [%v] -> %v (%v)", issue.GetTitle(), issue.GetId(), issue.GetState(), issue.GetRepo()),
+						}, nil
+					}
 				}
 			}
 		}
