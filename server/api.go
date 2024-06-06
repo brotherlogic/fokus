@@ -35,6 +35,7 @@ func NewServer() *Server {
 func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.GetFokusResponse, error) {
 	for _, m := range s.modules {
 		focus, err := m.getFokus(ctx)
+		log.Printf("%v -> %v", m.getName(), err)
 		if err == nil && focus != nil {
 			return &pb.GetFokusResponse{Focus: focus}, nil
 		}
