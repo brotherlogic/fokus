@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"strings"
 	"time"
@@ -49,6 +50,8 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 							Type:   o.getType(),
 							Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), time.Now().In(location)),
 						}, nil
+					} else {
+						log.Printf("Skipping %v because %v < %v", issue.GetTitle(), time.Unix(issue.GetOpenedDate(), 0), time.Now())
 					}
 				}
 			}
