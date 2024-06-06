@@ -41,7 +41,7 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
-					location, err := time.LoadLocation("America/Los_Angeles")
+					location, err := time.LoadLocation("Americas/Los_Angeles")
 					if err != nil {
 						return nil, err
 					}
