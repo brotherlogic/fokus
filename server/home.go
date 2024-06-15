@@ -46,10 +46,12 @@ func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() == "home" {
-				return &pb.Focus{
-					Type:   h.getType(),
-					Detail: fmt.Sprintf("%v [%v] -> %v (weekend)", issue.GetTitle(), issue.GetId(), issue.GetState()),
-				}, nil
+				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().In(location).YearDay() {
+					return &pb.Focus{
+						Type:   h.getType(),
+						Detail: fmt.Sprintf("%v [%v] -> %v (weekend)", issue.GetTitle(), issue.GetId(), issue.GetState()),
+					}, nil
+				}
 			}
 		}
 	}
