@@ -30,7 +30,7 @@ func (h *Highlight) getType() pb.Focus_FocusType {
 
 func (h *Highlight) getFokus(ctx context.Context) (*pb.Focus, error) {
 	// We can't rely on America/Los_Angeles being present it seems; ignore Daylight savbings
-	location := time.FixedZone("UTC-8", -8*60*60)
+	location := time.FixedZone("UTC-8", -7*60*60)
 
 	if time.Now().In(location).Weekday() == time.Saturday || time.Now().In(location).Weekday() == time.Sunday {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for highlight tasks")
