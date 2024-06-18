@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"time"
 
@@ -35,6 +36,7 @@ func (h *Highlight) getFokus(ctx context.Context) (*pb.Focus, error) {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for highlight tasks")
 	}
 
+	log.Printf("Evaluating time: %v", time.Now().In(location).Hour())
 	if (time.Now().In(location).Hour() < 6 || time.Now().In(location).Hour() >= 7) &&
 		(time.Now().In(location).Hour() < 15 || time.Now().In(location).Hour() >= 17) {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for highlight tasks")
