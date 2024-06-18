@@ -17,7 +17,6 @@ import (
 )
 
 type Highlight struct {
-	client githubridgeclient.GithubridgeClient
 }
 
 func (h *Highlight) getName() string {
@@ -28,21 +27,19 @@ func (h *Highlight) getType() pb.Focus_FocusType {
 	return pb.Focus_FOCUS_ON_HIGHLIGHT
 }
 
-func (h *Highlight) getFokus(ctx context.Context) (*pb.Focus, error) {
-	// We can't rely on America/Los_Angeles being present it seems; ignore Daylight savbings
-	location := time.FixedZone("UTC-8", -7*60*60)
+func (h *Highlight) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
 
-	if time.Now().In(location).Weekday() == time.Saturday || time.Now().In(location).Weekday() == time.Sunday {
+	if now.Weekday() == time.Saturday || now.Weekday() == time.Sunday {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for highlight tasks")
 	}
 
-	log.Printf("Evaluating time: %v", time.Now().In(location).Hour())
-	if (time.Now().In(location).Hour() < 6 || time.Now().In(location).Hour() >= 7) &&
-		(time.Now().In(location).Hour() < 15 || time.Now().In(location).Hour() >= 17) {
+	log.Printf("Evaluating time: %v", now.Hour())
+	if (now.Hour() < 6 || now.Hour() >= 7) &&
+		(now.Hour() < 15 || now.Hour() >= 17) {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for highlight tasks")
 	}
 
-	issues, err := h.client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
+	issues, err := client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
 	if err != nil {
 		return nil, err
 	}
