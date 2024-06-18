@@ -16,7 +16,6 @@ import (
 )
 
 type Home struct {
-	client githubridgeclient.GithubridgeClient
 }
 
 func (h *Home) getName() string {
@@ -27,16 +26,16 @@ func (h *Home) getType() pb.Focus_FocusType {
 	return pb.Focus_FOCUS_ON_HOME_TASKS
 }
 
-func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
-	if time.Now().Weekday() != time.Saturday && time.Now().Weekday() != time.Sunday {
+func (h *Home) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
+	if now.Weekday() != time.Saturday && now.Weekday() != time.Sunday {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
-	if time.Now().Hour() < 21 && time.Now().Hour() >= 22 {
+	if now.Hour() < 21 && now.Hour() >= 22 {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
-	issues, err := h.client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
+	issues, err := client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -46,9 +45,7 @@ func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() == "home" {
-				location := time.FixedZone("UTC-8", -9*60*60) // Daylight Savings
-
-				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().In(location).YearDay() {
+				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay() {
 					return &pb.Focus{
 						Type:   h.getType(),
 						Detail: fmt.Sprintf("%v [%v] -> %v (weekend)", issue.GetTitle(), issue.GetId(), issue.GetState()),

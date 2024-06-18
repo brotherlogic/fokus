@@ -18,7 +18,6 @@ import (
 )
 
 type Overdue struct {
-	client githubridgeclient.GithubridgeClient
 }
 
 func (o *Overdue) getName() string {
@@ -29,8 +28,8 @@ func (o *Overdue) getType() pb.Focus_FocusType {
 	return pb.Focus_FOCUS_ON_CODING_TASKS
 }
 
-func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
-	issues, err := o.client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
+func (o *Overdue) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
+	issues, err := client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
 	if err != nil {
 		return nil, err
 	}
@@ -42,19 +41,13 @@ func (o *Overdue) getFokus(ctx context.Context) (*pb.Focus, error) {
 			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
 					if !strings.HasPrefix(issue.GetTitle(), "CD Rip Need") {
-
-						// We can't rely on America/Los_Angeles being present it seems; ignore Daylight savbings
-						location := time.FixedZone("UTC-8", -8*60*60)
-						if err != nil {
-							return nil, err
-						}
-						if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().In(location).YearDay() {
+						if time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay() {
 							return &pb.Focus{
 								Type:   o.getType(),
-								Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), time.Now().In(location)),
+								Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), now),
 							}, nil
 						} else {
-							log.Printf("Skipping %v because %v < %v", issue.GetTitle(), time.Unix(issue.GetOpenedDate(), 0), time.Now())
+							log.Printf("Skipping %v because %v < %v", issue.GetTitle(), time.Unix(issue.GetOpenedDate(), 0), now)
 						}
 					}
 				}
