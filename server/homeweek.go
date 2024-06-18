@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"sort"
 	"time"
 
@@ -32,7 +33,9 @@ func (h *HomeWeek) getFokus(ctx context.Context) (*pb.Focus, error) {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
-	if time.Now().Hour() < 20 || time.Now().Hour() >= 21 {
+	location := time.FixedZone("UTC-8", -9*60*60)
+	log.Printf("Home fokus: %v", time.Now().In(location))
+	if time.Now().In(location).Hour() < 20 || time.Now().In(location).Hour() >= 22 {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 

@@ -32,7 +32,7 @@ func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
-	if time.Now().Hour() < 21 && time.Now().Hour() >= 22 {
+	if time.Now().Hour() < 13 && time.Now().Hour() >= 16 {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
 	}
 
@@ -46,7 +46,7 @@ func (h *Home) getFokus(ctx context.Context) (*pb.Focus, error) {
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() == "home" {
-				location := time.FixedZone("UTC-8", -9*60*60) // Daylight Savings
+				location := time.FixedZone("UTC-8", -9*60*60) // Daylight
 
 				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < time.Now().In(location).YearDay() {
 					return &pb.Focus{
