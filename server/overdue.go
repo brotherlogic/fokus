@@ -38,7 +38,7 @@ func (o *Overdue) getFokus(ctx context.Context, client githubridgeclient.Githubr
 
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
-			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" {
+			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" && issue.GetRepo() != "research" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {
 					if !strings.HasPrefix(issue.GetTitle(), "CD Rip Need") {
 						if time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay() {
