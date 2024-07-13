@@ -37,12 +37,10 @@ func (r *RecordAdd) getFokus(ctx context.Context, client githubridgeclient.Githu
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() == "recordadder" {
-				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay() {
-					return &pb.Focus{
-						Type:   r.getType(),
-						Detail: fmt.Sprintf("%v [%v]", issue.GetTitle(), issue.GetId()),
-					}, nil
-				}
+				return &pb.Focus{
+					Type:   r.getType(),
+					Detail: fmt.Sprintf("%v [%v]", issue.GetTitle(), issue.GetId()),
+				}, nil
 			}
 		}
 	}
