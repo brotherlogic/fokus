@@ -12,6 +12,8 @@ import (
 
 	pb "github.com/brotherlogic/fokus/proto"
 	"github.com/brotherlogic/fokus/server"
+
+	auth_client "github.com/brotherlogic/auth/client"
 )
 
 var (
@@ -21,6 +23,8 @@ var (
 
 func main() {
 	flag.Parse()
+
+	authModule := auth_client.AuthInterceptor{}
 
 	s := server.NewServer()
 
@@ -34,7 +38,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("fokus is unable to listen on the min grpc port %v: %v", *port, err)
 	}
-	gs := grpc.NewServer()
+	gs := grpc.NewServer(grpc.UnaryInterceptor(authModule.AuthIntercept))
 	pb.RegisterFokusServiceServer(gs, s)
 
 	log.Printf("Serving on port :%d", *port)
