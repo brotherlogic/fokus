@@ -5,7 +5,7 @@ go 1.22.1
 toolchain go1.22.5
 
 require (
-	github.com/brotherlogic/auth v0.3.0
+	github.com/brotherlogic/auth v0.9.0
 	github.com/brotherlogic/githubridge v0.2802.0
 	github.com/prometheus/client_golang v1.19.1
 	google.golang.org/grpc v1.65.0
@@ -30,5 +30,5 @@ require (
 	golang.org/x/sys v0.22.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20240722135656-d784300faade // indirect
 )

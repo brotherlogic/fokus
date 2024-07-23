@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
 	"net"
 	"net/http"
+	"time"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"google.golang.org/grpc"
@@ -24,7 +26,12 @@ var (
 func main() {
 	flag.Parse()
 
-	authModule := auth_client.AuthInterceptor{}
+	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+	authModule, err := auth_client.NewExternalAuthInterceptor(ctx)
+	cancel()
+	if err != nil {
+		log.Fatalf("Unable to get auth client: %w", err)
+	}
 
 	s := server.NewServer()
 

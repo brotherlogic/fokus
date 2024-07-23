@@ -4,6 +4,8 @@ github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
 github.com/beorn7/perks v1.0.1/go.mod h1:G2ZrVWU2WbWT9wwq4/hrbKbnv/1ERSJQ0ibhJ6rlkpw=
 github.com/brotherlogic/auth v0.3.0 h1:KkEZ79RqvW2nKrb4VeM5BEFK+snVtDBw1fh68DBVrI4=
 github.com/brotherlogic/auth v0.3.0/go.mod h1:34Lxp3DTdEQPmhM4yMJ7sFFoH+9rTHM8MhVcb21Sx0c=
+github.com/brotherlogic/auth v0.9.0 h1:VJp7lxnrhVhJu9kO5j0eNsaJd2pK+jvof9QRCbdLocs=
+github.com/brotherlogic/auth v0.9.0/go.mod h1:34Lxp3DTdEQPmhM4yMJ7sFFoH+9rTHM8MhVcb21Sx0c=
 github.com/brotherlogic/githubridge v0.2768.0 h1:OZeMPHjEruZW7c7YBsQrWAqonPnxCm215cGCtwFfrmM=
 github.com/brotherlogic/githubridge v0.2768.0/go.mod h1:xLDniGWZR/CZZheZ2tNJ0OUQ8v5ex3/RF+zu2ACQK/o=
 github.com/brotherlogic/githubridge v0.2776.0 h1:crW3DPM2HyUJL5M4HcDuOvKE2uwqlZk/bz+CGtQuFAw=
@@ -148,6 +150,8 @@ google.golang.org/genproto/googleapis/rpc v0.0.0-20240521202816-d264139d666e h1:
 google.golang.org/genproto/googleapis/rpc v0.0.0-20240521202816-d264139d666e/go.mod h1:EfXuqaE1J41VCDicxHzUDm+8rk+7ZdXzHV0IhO/I6s0=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d h1:JU0iKnSg02Gmb5ZdV8nYsKEKsP6o/FGVWTrw4i1DA9A=
 google.golang.org/genproto/googleapis/rpc v0.0.0-20240711142825-46eb208f015d/go.mod h1:Ue6ibwXGpU+dqIcODieyLOcgj7z8+IcskoNIgZxtrFY=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20240722135656-d784300faade h1:oCRSWfwGXQsqlVdErcyTt4A93Y8fo0/9D4b1gnI++qo=
+google.golang.org/genproto/googleapis/rpc v0.0.0-20240722135656-d784300faade/go.mod h1:Ue6ibwXGpU+dqIcODieyLOcgj7z8+IcskoNIgZxtrFY=
 google.golang.org/grpc v1.62.1 h1:B4n+nfKzOICUXMgyrNd19h/I9oH0L1pizfk1d4zSgTk=
 google.golang.org/grpc v1.62.1/go.mod h1:IWTG0VlJLCh1SkC58F7np9ka9mx/WNkjl4PGJaiq+QE=
 google.golang.org/grpc v1.63.2 h1:MUeiw1B2maTVZthpU5xvASfTh3LDbxHd6IJ6QQVU+xM=
