@@ -27,7 +27,7 @@ func main() {
 	flag.Parse()
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	authModule, err := auth_client.NewExternalAuthInterceptor(ctx)
+	authModule, err := auth_client.NewAuthInterceptor(ctx)
 	cancel()
 	if err != nil {
 		log.Fatalf("Unable to get auth client: %w", err)
