@@ -57,7 +57,7 @@ spec:
       nodeName: klust1
       containers:
         - name: fokus
-          image: registry.brotherlogic-backend.com/brotherlogic/fokus:0.41.0 # {"$imagepolicy": "flux-system:fokus"}
+          image: registry.brotherlogic-backend.com/brotherlogic/fokus:0.57.0 # {"$imagepolicy": "flux-system:fokus"}
           ports:
             - containerPort: 8080
       imagePullSecrets:

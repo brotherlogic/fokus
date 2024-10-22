@@ -13,6 +13,7 @@ message Focus {
         FOCUS_ON_CODING_TASKS = 4;
         FOCUS_ON_RECORD_COLLECTION_TASKS = 5;
         FOCUS_ON_HIGHLIGHT = 6;
+        FOCUS_ON_RECORD_ADDER = 7;
     }
 
     FocusType type = 1;

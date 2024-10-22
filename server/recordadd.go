@@ -15,24 +15,22 @@ import (
 	ghbpb "github.com/brotherlogic/githubridge/proto"
 )
 
-type Home struct {
+type RecordAdd struct {
 }
 
-func (h *Home) getName() string {
-	return "Home"
+func (r *RecordAdd) getName() string {
+	return "RecordAdd"
 }
 
-func (h *Home) getType() pb.Focus_FocusType {
-	return pb.Focus_FOCUS_ON_HOME_TASKS
+func (r *RecordAdd) getType() pb.Focus_FocusType {
+	return pb.Focus_FOCUS_ON_RECORD_ADDER
 }
 
-func (h *Home) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
+func (r *RecordAdd) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
 	if now.Weekday() != time.Saturday && now.Weekday() != time.Sunday {
-		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
-	}
-
-	if now.Hour() < 21 && now.Hour() >= 22 {
-		return nil, status.Errorf(codes.FailedPrecondition, "Not ready for home tasks")
+		if now.Hour() < 17 {
+			return nil, status.Errorf(codes.InvalidArgument, "Unable to find a suitable issue")
+		}
 	}
 
 	issues, err := client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
@@ -44,13 +42,11 @@ func (h *Home) getFokus(ctx context.Context, client githubridgeclient.Githubridg
 
 	for _, issue := range issues.Issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
-			if issue.GetRepo() == "home" {
-				if time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay() {
-					return &pb.Focus{
-						Type:   h.getType(),
-						Detail: fmt.Sprintf("%v [%v] -> %v (weekend)", issue.GetTitle(), issue.GetId(), issue.GetState()),
-					}, nil
-				}
+			if issue.GetRepo() == "recordadder" {
+				return &pb.Focus{
+					Type:   r.getType(),
+					Detail: fmt.Sprintf("%v [%v]", issue.GetTitle(), issue.GetId()),
+				}, nil
 			}
 		}
 	}
