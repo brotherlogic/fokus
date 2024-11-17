@@ -54,6 +54,7 @@ spec:
       labels:
         app: fokus
     spec:
+      nodeName: tclust1
       containers:
         - name: fokus
           image: registry.brotherlogic-backend.com/brotherlogic/fokus:0.58.0 # {"$imagepolicy": "flux-system:fokus"}
