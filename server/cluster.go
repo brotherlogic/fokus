@@ -27,6 +27,9 @@ func (c *Cluster) getType() pb.Focus_FocusType {
 }
 
 func (c *Cluster) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
+	if true {
+		return nil, status.Errorf(codes.InvalidArgument, "Unable to locate an open issue")
+	}
 
 	issues, err := client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
 	if err != nil {
