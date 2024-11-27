@@ -3,7 +3,6 @@ package server
 import (
 	"fmt"
 	"log"
-	"sort"
 	"strings"
 	"time"
 
@@ -28,15 +27,9 @@ func (o *Overdue) getType() pb.Focus_FocusType {
 	return pb.Focus_FOCUS_ON_CODING_TASKS
 }
 
-func (o *Overdue) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error) {
-	issues, err := client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
-	if err != nil {
-		return nil, err
-	}
+func (o *Overdue) getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time, issues []*ghbpb.GithubIssue) (*pb.Focus, error) {
 
-	sort.SliceStable(issues.Issues, func(i, j int) bool { return issues.Issues[i].GetOpenedDate() < issues.Issues[j].GetOpenedDate() })
-
-	for _, issue := range issues.Issues {
+	for _, issue := range issues {
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			if issue.GetRepo() != "bandcampserver" && issue.GetRepo() != "recordalerting" && issue.GetRepo() != "home" && issue.GetRepo() != "research" {
 				if !strings.Contains(issue.GetTitle(), "Incomplete Order") {

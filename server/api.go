@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"log"
+	"sort"
 	"time"
 
 	"google.golang.org/grpc/codes"
@@ -10,12 +11,13 @@ import (
 
 	ghbclient "github.com/brotherlogic/githubridge/client"
 	githubridgeclient "github.com/brotherlogic/githubridge/client"
+	ghbpb "github.com/brotherlogic/githubridge/proto"
 
 	pb "github.com/brotherlogic/fokus/proto"
 )
 
 type Fokusable interface {
-	getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time) (*pb.Focus, error)
+	getFokus(ctx context.Context, client githubridgeclient.GithubridgeClient, now time.Time, issues []*ghbpb.GithubIssue) (*pb.Focus, error)
 	getName() string
 	getType() pb.Focus_FocusType
 }
@@ -41,8 +43,15 @@ func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.Get
 	location := time.FixedZone("UTC-8", -7*60*60)
 	t := time.Now().In(location)
 
+	issues, err := s.client.GetIssues(ctx, &ghbpb.GetIssuesRequest{})
+	if err != nil {
+		return nil, err
+	}
+
+	sort.SliceStable(issues.Issues, func(i, j int) bool { return issues.Issues[i].GetOpenedDate() < issues.Issues[j].GetOpenedDate() })
+
 	for _, m := range s.modules {
-		focus, err := m.getFokus(ctx, s.client, t)
+		focus, err := m.getFokus(ctx, s.client, t, issues.GetIssues())
 		log.Printf("%v -> %v", m.getName(), err)
 		if err == nil && focus != nil {
 			return &pb.GetFokusResponse{Focus: focus}, nil
