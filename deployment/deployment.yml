@@ -57,7 +57,7 @@ spec:
       nodeName: tclust1
       containers:
         - name: fokus
-          image: registry.brotherlogic-backend.com/brotherlogic/fokus:0.61.0 # {"$imagepolicy": "flux-system:fokus"}
+          image: registry.brotherlogic-backend.com/brotherlogic/fokus:0.62.0 # {"$imagepolicy": "flux-system:fokus"}
           ports:
             - containerPort: 8080
       imagePullSecrets:
