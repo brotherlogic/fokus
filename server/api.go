@@ -93,6 +93,7 @@ func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIss
 }
 
 func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.GetFokusResponse, error) {
+	log.Printf("Getting Fokus")
 	// We can't rely on America/Los_Angeles being present it seems; ignore Daylight savbings
 	location := time.FixedZone("UTC-8", -7*60*60)
 	t := time.Now().In(location)
