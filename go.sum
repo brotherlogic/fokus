@@ -8,6 +8,8 @@ github.com/brotherlogic/auth v0.11.0 h1:jzJ9/kLX6GEbLGLeMfJjSsmuS7hE4SF48IywtLuH
 github.com/brotherlogic/auth v0.11.0/go.mod h1:34Lxp3DTdEQPmhM4yMJ7sFFoH+9rTHM8MhVcb21Sx0c=
 github.com/brotherlogic/auth v0.12.0 h1:yNsv1Xi3xCHPUrkTMCj+E5zP7hKRDaLizccVVKSSlk4=
 github.com/brotherlogic/auth v0.12.0/go.mod h1:34Lxp3DTdEQPmhM4yMJ7sFFoH+9rTHM8MhVcb21Sx0c=
+github.com/brotherlogic/auth v0.13.0 h1:idOP0rh1Us3MotuIGEHPRqDIuMMUgrNS16PnTTWMSwE=
+github.com/brotherlogic/auth v0.13.0/go.mod h1:34Lxp3DTdEQPmhM4yMJ7sFFoH+9rTHM8MhVcb21Sx0c=
 github.com/brotherlogic/githubridge v0.2802.0 h1:9Dz8jzHYNNGheax3eZxLP7itjMnWjReukNafNa/U76E=
 github.com/brotherlogic/githubridge v0.2802.0/go.mod h1:XTxap90/th23AU2BWYFxnSyiQFwDYyBI0PWxDZTCQpo=
 github.com/brotherlogic/githubridge v0.2814.0 h1:XJCiX6d8HyhlKs5lDexvX9OeQhJ1/qFhEePeZ7WIzo0=

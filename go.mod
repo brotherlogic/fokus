@@ -5,7 +5,7 @@ go 1.22.7
 toolchain go1.23.3
 
 require (
-	github.com/brotherlogic/auth v0.12.0
+	github.com/brotherlogic/auth v0.13.0
 	github.com/brotherlogic/githubridge v0.2824.0
 	github.com/prometheus/client_golang v1.20.5
 	google.golang.org/grpc v1.69.2
