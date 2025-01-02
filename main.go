@@ -30,7 +30,7 @@ func main() {
 	authModule, err := auth_client.NewAuthInterceptor(ctx)
 	cancel()
 	if err != nil {
-		log.Fatalf("Unable to get auth client: %w", err)
+		log.Fatalf("Unable to get auth client: %v", err)
 	}
 
 	s := server.NewServer()
