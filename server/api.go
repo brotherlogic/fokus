@@ -54,7 +54,7 @@ func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIss
 		}
 
 		sort.SliceStable(comments.Comments, func(i, j int) bool {
-			return comments.Comments[i].GetTimestamp() < comments.Comments[j].GetTimestamp()
+			return comments.Comments[i].GetTimestamp() > comments.Comments[j].GetTimestamp()
 		})
 
 		if len(comments.Comments) > 0 && strings.HasPrefix(comments.Comments[0].GetText(), "Block on") {
