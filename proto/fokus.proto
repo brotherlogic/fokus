@@ -15,6 +15,7 @@ message Focus {
         FOCUS_ON_HIGHLIGHT = 6;
         FOCUS_ON_RECORD_ADDER = 7;
         FOCUS_ON_CLUSTER = 8;
+        FOCUS_ON_TASKS = 9;
     }
 
     FocusType type = 1;
