@@ -42,7 +42,7 @@ func (o *Overdue) getFokus(ctx context.Context, client githubridgeclient.Githubr
 						}
 
 						log.Printf("Found labels: %v", issue.GetLabels())
-						if flabel && time.Unix(issue.GetOpenedDate(), 0).Year() != now.Year() || time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay() {
+						if flabel && (time.Unix(issue.GetOpenedDate(), 0).Year() != now.Year() || time.Unix(issue.GetOpenedDate(), 0).YearDay() < now.YearDay()) {
 							return &pb.Focus{
 								Type:   o.getType(),
 								Detail: fmt.Sprintf("%v [%v] -> %v (%v vs %v)", issue.GetTitle(), issue.GetId(), issue.GetState(), time.Unix(issue.GetOpenedDate(), 0).YearDay(), now),
