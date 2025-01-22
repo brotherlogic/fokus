@@ -35,7 +35,7 @@ func NewServer() *Server {
 		log.Fatalf("Unable to reach GHB")
 	}
 	return &Server{
-		modules: []Fokusable{&Cluster{}, &RecordAdd{}, &Tasks{}, &Highlight{}, &HomeWeek{}, &Home{}, &Overdue{}},
+		modules: []Fokusable{&Code{}, &Cluster{}, &RecordAdd{}, &Tasks{}, &Highlight{}, &HomeWeek{}, &Home{}, &Overdue{}},
 		client:  client,
 	}
 }
