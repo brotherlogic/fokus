@@ -18,7 +18,7 @@ type Code struct {
 }
 
 func (h *Code) getName() string {
-	return "tasks"
+	return "code"
 }
 
 func (h *Code) getType() pb.Focus_FocusType {
@@ -40,7 +40,7 @@ func (h *Code) getFokus(ctx context.Context, client githubridgeclient.Githubridg
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			foundLabel := false
 			for _, label := range issue.GetLabels() {
-				if label == "task" {
+				if label == "code" {
 					foundLabel = true
 				}
 			}
