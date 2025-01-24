@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"time"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -24,5 +25,5 @@ func main() {
 		log.Fatalf("Unable to get fokus: %v", err)
 	}
 
-	fmt.Printf("%v\n", fok)
+	fmt.Printf("%v [%v]\n", fok, time.Unix(fok.GetGivenTime(), 0))
 }
