@@ -26,6 +26,7 @@ message Focus {
 message GetFokusRequest{}
 message GetFokusResponse{
     Focus focus = 1;
+    int64 given_time = 2;
 }
 
 service FokusService {

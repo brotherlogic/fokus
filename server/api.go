@@ -114,7 +114,10 @@ func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.Get
 		focus, err := m.getFokus(ctx, s.client, t, issues)
 		log.Printf("%v -> %v", m.getName(), err)
 		if err == nil && focus != nil {
-			return &pb.GetFokusResponse{Focus: focus}, nil
+			return &pb.GetFokusResponse{
+				Focus:     focus,
+				GivenTime: t.Unix(),
+			}, nil
 		}
 	}
 
