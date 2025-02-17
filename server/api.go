@@ -44,6 +44,27 @@ func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIss
 	var validIssues []*ghbpb.GithubIssue
 
 	for _, issue := range issues {
+		// See if we've manually tagged the issue as blocked
+		labels, err := s.client.GetLabels(ctx, &ghbpb.GetLabelsRequest{
+			User: "brotherlogic",
+			Repo: issue.GetRepo(),
+			Id:   int32(issue.GetId()),
+		})
+		if err != nil {
+			return nil, err
+		}
+		blocked := false
+		for _, label := range labels.GetLabels() {
+			if strings.ToLower(label) == "blocked" {
+				blocked = true
+			}
+		}
+
+		// Skip this issue if it's blocked
+		if blocked {
+			continue
+		}
+
 		comments, err := s.client.GetComments(ctx, &ghbpb.GetCommentsRequest{
 			Repo: issue.GetRepo(),
 			User: issue.GetUser(),
