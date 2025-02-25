@@ -78,7 +78,7 @@ func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIss
 			return comments.Comments[i].GetTimestamp() > comments.Comments[j].GetTimestamp()
 		})
 
-		if len(comments.Comments) > 0 && strings.HasPrefix(comments.Comments[0].GetText(), "Block on") {
+		if len(comments.Comments) > 0 && (strings.HasPrefix(comments.Comments[0].GetText(), "Block on") || strings.HasPrefix(comments.Comments[0].GetText(), "Blocked on")) {
 			elems := strings.Split(strings.Fields(comments.Comments[0].GetText())[2], "/")
 			number, err := strconv.ParseInt(elems[2], 10, 32)
 			if err != nil {
