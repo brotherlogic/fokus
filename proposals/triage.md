@@ -52,10 +52,17 @@ break it down further.
 Triage is interactive and we do it once a day, at the start of the day
 and each bug needs to be worked through
 
-## Tasks
+## Process
 
 1. Fokus Triage pulls up each untriaged issue in turn.
 1. Fokus Triage supports type labels
 1. Fokus Triage supports priority labels
 1. Fokus Triage supports size labels
 1. For code issues, we validate that the code issue is suitable and is blessed.
+
+## Tasks
+
+1. Fokus Triage prints an untriaged issue
+1. Fokus sets type label
+1. Fokus sets sublabels
+1. Fokus loops
