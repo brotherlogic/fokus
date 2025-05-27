@@ -52,7 +52,7 @@ break it down further.
 Triage is interactive and we do it once a day, at the start of the day
 and each bug needs to be worked through
 
-## Process
+## Typical Process
 
 1. Fokus Triage pulls up each untriaged issue in turn.
 1. Fokus Triage supports type labels
