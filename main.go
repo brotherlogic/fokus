@@ -32,14 +32,14 @@ func main() {
 
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
 	if err != nil {
-		log.Fatalf("fokus is unable to listen on the min grpc port %v: %v", *port, err)
+		log.Fatalf("Fokus is unable to listen on the min grpc port %v: %v", *port, err)
 	}
 	gs := grpc.NewServer()
 	pb.RegisterFokusServiceServer(gs, s)
 
 	log.Printf("Serving on port :%d", *port)
 	if err := gs.Serve(lis); err != nil {
-		log.Fatalf("fokus is unable to serve grpc for some reason: %v", err)
+		log.Fatalf("Fokus is unable to serve grpc for some reason: %v", err)
 	}
-	log.Fatalf("fokus has closed the grpc port for some reason")
+	log.Fatalf("Fokus has closed the grpc port for some reason")
 }
