@@ -32,7 +32,7 @@ func (h *Code) getFokus(ctx context.Context, client githubridgeclient.Githubridg
 		return nil, status.Errorf(codes.FailedPrecondition, "Not the time for coding")
 	}
 
-	if now.Hour() < 5 || now.Hour() > 15 {
+	if now.Hour() < 5 || now.Hour() > 16 {
 		return nil, status.Errorf(codes.FailedPrecondition, "Not the time for coding")
 	}
 
@@ -40,7 +40,7 @@ func (h *Code) getFokus(ctx context.Context, client githubridgeclient.Githubridg
 		if issue.GetState() == ghbpb.IssueState_ISSUE_STATE_OPEN {
 			foundLabel := false
 			for _, label := range issue.GetLabels() {
-				if label == "code" {
+				if label == "code" || label == "type-code" {
 					foundLabel = true
 				}
 			}
