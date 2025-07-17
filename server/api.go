@@ -49,28 +49,26 @@ func NewServer() *Server {
 	}
 }
 
-func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIssue) ([]*ghbpb.GithubIssue, error) {
+func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIssue, reqLabel string) ([]*ghbpb.GithubIssue, error) {
 	var validIssues []*ghbpb.GithubIssue
 
 	for _, issue := range issues {
-		// See if we've manually tagged the issue as blocked
-		labels, err := s.client.GetLabels(ctx, &ghbpb.GetLabelsRequest{
-			User: "brotherlogic",
-			Repo: issue.GetRepo(),
-			Id:   int32(issue.GetId()),
-		})
-		if err != nil {
-			return nil, err
-		}
+		foundLabel := false
+
 		blocked := false
-		for _, label := range labels.GetLabels() {
+		for _, label := range issue.GetLabels() {
 			if strings.ToLower(label) == "blocked" {
 				blocked = true
+			}
+
+			if reqLabel == "" || reqLabel == label {
+				foundLabel = true
 			}
 		}
 
 		// Skip this issue if it's blocked
-		if blocked {
+		if blocked || !foundLabel {
+			log.Printf("Skipping %v because %v or %v", issue, blocked, foundLabel)
 			continue
 		}
 
@@ -134,7 +132,7 @@ func (s *Server) GetFokus(ctx context.Context, req *pb.GetFokusRequest) (*pb.Get
 		return nil, err
 	}
 
-	issues, err := s.trimToActionable(ctx, rissues.Issues)
+	issues, err := s.trimToActionable(ctx, rissues.Issues, req.GetLabel())
 	if err != nil {
 		return nil, err
 	}

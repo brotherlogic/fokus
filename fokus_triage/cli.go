@@ -148,11 +148,9 @@ func main() {
 		fmt.Printf("Issue %v: %v (%v)\n", i, issue.GetTitle(), issue.GetLabels())
 
 		t.runLabel(issue, issueTypes, "type", "")
-		t.runLabel(issue, priorities, "priority", "")
 		t.runLabel(issue, processTShirt, "size", "type-process")
 		t.runLabel(issue, researchTShirt, "size", "type-research")
 		t.runLabel(issue, codeBreakdown, "sized", "type-code")
 
-		return
 	}
 }

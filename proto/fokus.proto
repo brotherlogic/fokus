@@ -17,6 +17,7 @@ message Focus {
         FOCUS_ON_CLUSTER = 8;
         FOCUS_ON_TASKS = 9;
         FOCUS_ON_FOKUS = 10;
+        FOCUS_ON_ALL = 11;
     }
 
     FocusType type = 1;
@@ -24,7 +25,9 @@ message Focus {
     string link = 3;
 }
 
-message GetFokusRequest{}
+message GetFokusRequest{
+    string label = 1;
+}
 message GetFokusResponse{
     Focus focus = 1;
     int64 given_time = 2;

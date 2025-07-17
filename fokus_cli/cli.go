@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"google.golang.org/grpc"
@@ -18,8 +19,20 @@ func main() {
 		log.Fatalf("Dial fail: %v", err)
 	}
 
+	sig := ""
+	if len(os.Args) > 2 {
+		switch os.Args[1] {
+		case "code":
+			sig = "type-code"
+		case "process":
+			sig = "type-process"
+		case "research":
+			sig = "type-research"
+		}
+	}
+
 	fclient := pb.NewFokusServiceClient(conn)
-	fok, err := fclient.GetFokus(context.Background(), &pb.GetFokusRequest{})
+	fok, err := fclient.GetFokus(context.Background(), &pb.GetFokusRequest{Label: sig})
 
 	if err != nil {
 		log.Fatalf("Unable to get fokus: %v", err)
