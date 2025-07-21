@@ -68,7 +68,7 @@ func (s *Server) trimToActionable(ctx context.Context, issues []*ghbpb.GithubIss
 
 		// Skip this issue if it's blocked
 		if blocked || !foundLabel {
-			log.Printf("Skipping %v because %v or %v", issue, blocked, foundLabel)
+			log.Printf("Skipping %v because %v or %v (%v)", issue, blocked, foundLabel, reqLabel)
 			continue
 		}
 
